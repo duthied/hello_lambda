@@ -6,3 +6,5 @@ def lambda_handler(event, context):
         'statusCode': 200,
         'body': json.dumps('Hello from Lambda v3!')
     }
+
+# no-op change to test GHA workflow
