@@ -63,3 +63,5 @@ jobs:
         # Cleanup
         rm -r lambda_env
         rm existing_lambda.zip updated_lambda.zip
+
+        
