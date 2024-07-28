@@ -4,7 +4,7 @@ def lambda_handler(event, context):
     # TODO implement
     return {
         'statusCode': 200,
-        'body': json.dumps('Hello from Lambda v11!')
+        'body': json.dumps('Hello from Lambda v12!')
     }
 
 # no-op change to test GHA workflow
@@ -14,4 +14,4 @@ def lambda_handler(event, context):
 # yet another change8
 # yet another change9
 # yet another change8
-# yet another change11
+# yet another change12
