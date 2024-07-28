@@ -31,7 +31,7 @@ jobs:
     - name: Deploy Modified Files
       run: |
         # Constants
-        S3_BUCKET=arn:aws:s3:::hello-lambda-src
+        S3_BUCKET=hello-lambda-src
         S3_KEY=lambda_function.zip
         LAMBDA_FUNCTION_NAME=hello 
         # Download the existing zip from S3
