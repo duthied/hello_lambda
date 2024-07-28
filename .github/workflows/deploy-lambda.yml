@@ -43,7 +43,4 @@ jobs:
 
           # Update Lambda
           aws lambda update-function-code --function-name $LAMBDA_FUNCTION_NAME --s3-bucket $S3_BUCKET --s3-key $S3_KEY
-          # Cleanup 
-          rm -r $DEPLOY_DIR
-          rm $ZIP_NAME
         
