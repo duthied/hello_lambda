@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - main
-    paths:
-      - '**.py' # Change to the file extension of the language that you are using.
+    # paths:
+      # - '**.py' # Change to the file extension of the language that you are using.
 
 jobs:
   deploy:
@@ -20,25 +20,29 @@ jobs:
           aws-region: us-east-1
       -  name: Creating deployment zip
          run: | 
-          sudo apt install zip
-          mkdir -p ./deployment_zip 
-          # install python deps (later)
-          # pip install snowflake-connector-python --platform manylinux2010_x86_64 --only-binary=:all: -t ./deployment_zip
-          cp ./lambda_function.py  ./deployment_zip
-          cd deployment_zip 
-          zip -r lambda_zip.zip *
-      - name: Pushing new version to S3
-        run: | 
           # Constants
           S3_BUCKET=hello-lambda-src
           S3_KEY=lambda_function.zip
           LAMBDA_FUNCTION_NAME=arn:aws:lambda:us-east-1:972194656918:function:hello 
+          ZIP_NAME=updated_lambda.zip
+          DEPLOY_DIR=deployment_zip
+          sudo apt install zip
+          mkdir -p ./$DEPLOY_DIR 
+          # install python deps (later)
+          # pip install snowflake-connector-python --platform manylinux2010_x86_64 --only-binary=:all: -t ./$DEPLOY_DIR
+          # single py...will need updating
+          cp ./lambda_function.py  ./$DEPLOY_DIR
+          cd $DEPLOY_DIR 
+          zip -r $ZIP_NAME *
+      - name: Pushing new version to S3
+        run: | 
+          
           # Upload the updated zip to S3
-          aws s3 cp updated_lambda.zip s3://$S3_BUCKET/$S3_KEY
+          aws s3 cp $ZIP_NAME s3://$S3_BUCKET/$S3_KEY
       - name: lambda_code_update
         run: |
           aws lambda update-function-code --function-name $LAMBDA_FUNCTION_NAME --s3-bucket $S3_BUCKET --s3-key $S3_KEY
           Cleanup 
-          rm -r deployment_zip
-          rm updated_lambda.zip
+          rm -r $DEPLOY_DIR
+          rm $ZIP_NAME
         
